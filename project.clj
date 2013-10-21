@@ -1,4 +1,4 @@
-(defproject rsc-ls "0.0.1-SNAPSHOT"
+(defproject org.clojars.quoll/rsc-ls "0.0.1-SNAPSHOT"
   :description "Resource listing plugin for Leiningen"
   :url "https://github.com/revelytix/rsc-ls"
   :license {:name "Eclipse Public License"
