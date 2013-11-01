@@ -43,9 +43,14 @@
   "Main entry point to list directories."
   [{paths :resource-paths :as project}]
   (println "resource paths: " paths)
-  (if-let [target-dir (first (remove-builtin paths))]
-    (do
-      (println "Creating resource listing")
+  (let [target-dir (or (:resource-list-dir project)
+                       (first (remove-builtin paths)))]
+    (when target-dir
+      (println "Creating resource listing in: " target-dir)
+      (let [td (File. target-dir)]
+        (if (.exists td) 
+          (when-not (.isDirectory td) (throw (ex-info "Target path for directory listing is not a directory" {:target target-dir})))
+          (.mkdirs td)))
       (->> paths
            (mapcat rel-dir)
            (cons list-file)
