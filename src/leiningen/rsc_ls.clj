@@ -28,18 +28,27 @@
 (defn rel-dir
   "Lists a director, relative to a string path."
   [^String d]
+  (println "Including resouces from: " d)
   (let [dir (File. d)
         dir-len (inc (count (.getAbsolutePath dir)))]
     (->> (list-dir dir)
          (map #(subs (.getAbsolutePath %) dir-len))
          (remove #(= % list-file)))))
 
+(defn remove-builtin
+  [paths]
+  (remove #{"dev-resources"} (map #(.getName (File. %)) paths)))
+
 (defn rsc-ls
   "Main entry point to list directories."
-  [project]
-  (if-let [target-dir (first (:resource-paths project))]
-    (->> (:resource-paths project)
-         (mapcat rel-dir)
-         (cons list-file)
-         (spit (str target-dir File/pathSeparator list-file)))))
+  [{paths :resource-paths :as project}]
+  (println "resource paths: " paths)
+  (if-let [target-dir (first (remove-builtin paths))]
+    (do
+      (println "Creating resource listing")
+      (->> paths
+           (mapcat rel-dir)
+           (cons list-file)
+           (s/join "\n")
+           (spit (str target-dir File/separator list-file))))))
 
