@@ -28,7 +28,7 @@
 (defn rel-dir
   "Lists a director, relative to a string path."
   [^String d]
-  (println "Including resouces from: " d)
+  (println "Including resources from: " d)
   (let [dir (File. d)
         dir-len (inc (count (.getAbsolutePath dir)))]
     (->> (list-dir dir)
