@@ -26,7 +26,7 @@ list any others.
 
 Refer to the plugin in the project.clj file:
 
-`:plugins [[org.clojars.quoll/rsc-ls "0.0.2"]]`
+`:plugins [[org.clojars.quoll/rsc-ls "0.0.3"]]`
 
 Operates as a target, so it can invoked from the command line:
 
